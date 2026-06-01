@@ -84,24 +84,78 @@ export default function App() {
   const addToCart = (product) =>
     setCart((prev) => {
       const hit = prev.find((i) => i.product.id === product.id)
+      mixpanel.track('product_add_to_cart', {
+        product_id: product.id,
+        product_name: product.name,
+        product_category: product.category,
+        product_price: product.price,
+        product_weight: product.weight,
+        has_image: Boolean(product.image),
+        previous_quantity: hit?.quantity || 0,
+        new_quantity: (hit?.quantity || 0) + 1,
+      })
       return hit
         ? prev.map((i) => (i.product.id === product.id ? { ...i, quantity: i.quantity + 1 } : i))
         : [...prev, { product, quantity: 1 }]
     })
 
   const increase = (id) =>
-    setCart((prev) => prev.map((i) => (i.product.id === id ? { ...i, quantity: i.quantity + 1 } : i)))
+    setCart((prev) => {
+      const target = prev.find((i) => i.product.id === id)
+      if (target) {
+        mixpanel.track('cart_quantity_increase', {
+          product_id: target.product.id,
+          product_name: target.product.name,
+          from_quantity: target.quantity,
+          to_quantity: target.quantity + 1,
+        })
+      }
+      return prev.map((i) => (i.product.id === id ? { ...i, quantity: i.quantity + 1 } : i))
+    })
 
   const decrease = (id) =>
-    setCart((prev) =>
-      prev
+    setCart((prev) => {
+      const target = prev.find((i) => i.product.id === id)
+      if (target) {
+        mixpanel.track('cart_quantity_decrease', {
+          product_id: target.product.id,
+          product_name: target.product.name,
+          from_quantity: target.quantity,
+          to_quantity: Math.max(target.quantity - 1, 0),
+        })
+      }
+      return prev
         .map((i) => (i.product.id === id ? { ...i, quantity: i.quantity - 1 } : i))
-        .filter((i) => i.quantity > 0),
-    )
+        .filter((i) => i.quantity > 0)
+    })
 
-  const remove = (id) => setCart((prev) => prev.filter((i) => i.product.id !== id))
+  const remove = (id) =>
+    setCart((prev) => {
+      const target = prev.find((i) => i.product.id === id)
+      if (target) {
+        mixpanel.track('cart_item_remove', {
+          product_id: target.product.id,
+          product_name: target.product.name,
+          quantity_removed: target.quantity,
+        })
+      }
+      return prev.filter((i) => i.product.id !== id)
+    })
 
   const onCheckout = () => {
+    mixpanel.track('cart_checkout_click', {
+      cart_items_count: cart.reduce((acc, item) => acc + item.quantity, 0),
+      cart_distinct_items: cart.length,
+      subtotal,
+      products: cart.map(({ product, quantity }) => ({
+        id: product.id,
+        name: product.name,
+        category: product.category,
+        price: product.price,
+        quantity,
+      })),
+    })
+
     const lines = cart.map(
       ({ product, quantity }) => `- ${quantity}x ${product.name} (${formatCop(product.price * quantity)})`,
     )
@@ -115,6 +169,7 @@ export default function App() {
   }
 
   const courseWhatsApp = (courseName) => {
+    mixpanel.track('course_whatsapp_info_click', { course_name: courseName })
     const msg = `¡Hola! Quiero más información sobre el curso "${courseName}" de Charcutería Pérez.`
     window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank', 'noopener,noreferrer')
   }
@@ -235,12 +290,17 @@ export default function App() {
                       <Button
                         variant="default"
                         className="mt-3 w-full bg-[#FC4A2C] hover:bg-[#FC4A2C]/90"
-                        onClick={() =>
+                        onClick={() => {
+                          mixpanel.track('course_buy_click', {
+                            course_name: course.title,
+                            course_rating: course.rating,
+                            release_date: course.releaseDate,
+                          })
                           setOpenedCountdowns((prev) => ({
                             ...prev,
                             [course.title]: true,
                           }))
-                        }
+                        }}
                       >
                         Comprar curso
                       </Button>
@@ -319,6 +379,7 @@ export default function App() {
         href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent('¡Hola! Quiero más información sobre sus productos y cursos.')}`}
         target="_blank"
         rel="noreferrer"
+        onClick={() => mixpanel.track('floating_whatsapp_click', { source: 'floating_button' })}
         className="fixed bottom-5 right-5 z-50 inline-flex items-center gap-2 rounded-full bg-[#25D366] px-4 py-3 text-sm font-semibold text-white shadow-lg transition hover:brightness-95"
       >
         <MessageCircle size={18} /> WhatsApp
