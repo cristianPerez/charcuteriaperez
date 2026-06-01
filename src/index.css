@@ -1,79 +1,11 @@
-:root {
-  font-family: 'Trebuchet MS', 'Segoe UI', sans-serif;
-  color: #2f1f15;
-  background: #f6eee7;
-}
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Inter:wght@400;500;600;700&display=swap');
 
-* {
-  box-sizing: border-box;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-body {
-  margin: 0;
-}
-
-.landing {
-  min-height: 100vh;
-  padding: 3rem 1.25rem;
-  max-width: 1100px;
-  margin: 0 auto;
-}
-
-.hero {
-  background: linear-gradient(130deg, #fff8f2, #fce4cf);
-  border: 1px solid #e7c6a8;
-  border-radius: 20px;
-  padding: 2rem;
-}
-
-.badge {
-  display: inline-block;
-  background: #8c2f1b;
-  color: #fff;
-  padding: 0.25rem 0.75rem;
-  border-radius: 999px;
-  font-size: 0.85rem;
-}
-
-h1 {
-  margin-top: 1rem;
-  font-size: clamp(1.8rem, 5vw, 3rem);
-}
-
-.hero p {
-  line-height: 1.6;
-}
-
-button {
-  margin-top: 0.8rem;
-  background: #8c2f1b;
-  color: #fff;
-  border: none;
-  border-radius: 10px;
-  padding: 0.8rem 1rem;
-  cursor: pointer;
-  font-weight: 600;
-}
-
-.cursos {
-  margin-top: 2rem;
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 1rem;
-}
-
-.card {
-  background: #fff;
-  border: 1px solid #e3d2c2;
-  border-radius: 14px;
-  padding: 1rem;
-}
-
-.card span {
-  font-size: 0.8rem;
-  color: #8c2f1b;
-  font-weight: 700;
+@layer base {
+  :root { font-family: Inter, system-ui, sans-serif; }
+  h1, h2, h3 { font-family: Fraunces, Georgia, serif; }
+  body { @apply bg-background text-foreground; }
 }
