@@ -1,5 +1,6 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
+import mixpanel from 'mixpanel-browser'
 import { Ham, MessageCircle, Search, ShoppingCart, Sparkles, Star, UtensilsCrossed } from 'lucide-react'
 import { products, categories } from '@/data/products'
 import ProductCard from '@/components/ProductCard'
@@ -15,6 +16,22 @@ export default function App() {
   const [search, setSearch] = useState('')
   const [cartOpen, setCartOpen] = useState(false)
   const [cart, setCart] = useState([])
+
+  useEffect(() => {
+    const onButtonClick = (event) => {
+      const button = event.target.closest('button')
+      if (!button) return
+
+      mixpanel.track('button_clicked', {
+        label: button.innerText?.trim() || 'unknown',
+        id: button.id || undefined,
+        className: button.className || undefined,
+      })
+    }
+
+    document.addEventListener('click', onButtonClick)
+    return () => document.removeEventListener('click', onButtonClick)
+  }, [])
   const courses = [
     {
       title: 'Master en Chorizos del Mundo',
