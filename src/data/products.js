@@ -6,7 +6,7 @@ export const products = [
     price: 15000,
     weight: '250 g',
     description: 'Curado lento con madera de encina y especias seleccionadas.',
-    image: '/product-chorizo-premium.png',
+    image: '/product-chorizo-premium.jpg',
   },
   {
     id: 'mad-003',
@@ -15,7 +15,7 @@ export const products = [
     price: 25000,
     weight: '250 g',
     description: 'Lomo artesanal curado con especias, corte fino y sabor profundo.',
-    image: '/product-lomo-curado.png',
+    image: '/product-lomo-curado.jpg',
   },
   {
     id: 'fre-003',
@@ -24,7 +24,7 @@ export const products = [
     price: 15000,
     weight: '250 g',
     description: 'Jamón York jugoso, cocción controlada y sabor suave para todo momento.',
-    image: '/product-jamon-york.png',
+    image: '/product-jamon-york.jpg',
   },
 ]
 

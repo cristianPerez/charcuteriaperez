@@ -7,6 +7,7 @@ import ProductCard from '@/components/ProductCard'
 import CartDrawer from '@/components/CartDrawer'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import BrandLogoMain from './components/BrandLogoMain'
 
 const WHATSAPP_NUMBER = '573003526578'
 const formatCop = (v) => `$${v.toLocaleString('es-CO')}`
@@ -39,21 +40,21 @@ export default function App() {
       subtitle: 'Más de 100 tipos de chorizos diferentes con técnicas artesanales y profesionales.',
       icon: UtensilsCrossed,
       rating: 4.8,
-      image: '/course-chorizos.png',
+      image: '/course-chorizos.jpg',
     },
     {
       title: 'Master en Jamones Cocidos Premium',
       subtitle: 'Curvas de cocción, textura y perfil de sabor de alto nivel.',
       icon: Ham,
       rating: 4.6,
-      image: '/course-cocidos.png',
+      image: '/course-cocidos.jpg',
     },
     {
       title: 'Master en Jamones Curados',
       subtitle: 'Salado, reposo y maduración para piezas excepcionales.',
       icon: Sparkles,
       rating: 5,
-      image: '/course-curados.png',
+      image: '/course-curados.jpg',
     },
   ]
 
@@ -111,26 +112,23 @@ export default function App() {
   return (
     <main className="min-h-screen bg-white text-foreground">
       <header className="w-full">
-        <div className="w-full bg-[#a41517] px-4 py-3 text-center text-sm font-semibold tracking-wide text-white sm:text-base">
+        <div className="w-full bg-[#FC4A2C] px-4 py-1 text-center text-sm font-semibold tracking-wide text-white sm:text-base">
           Bienvenidos a nuestra tienda
         </div>
 
-        <div className="w-full border-b border-zinc-200 bg-white py-4">
-          <div className="mx-auto flex max-w-7xl flex-col items-center justify-center px-4">
-            <img src="/logo-main.png" alt="Logo Charcutería Pérez" className="h-28 w-28 object-contain sm:h-32 sm:w-32" />
-            <p className="mb-2 text-center text-xl font-bold uppercase tracking-[0.12em] text-[#a41517] sm:text-2xl">
-              Charcutería Pérez
-            </p>
+        <div className="w-full border-b border-zinc-200 bg-white">
+          <div className="mx-auto flex max-w-7xl flex-col items-center justify-center">
+            <BrandLogoMain width={200} height={200} colorFill="#FC4A2C" />
           </div>
         </div>
 
         <div className="relative w-full overflow-hidden border-b border-zinc-200">
-          <img src="/banner-main.png" alt="Banner charcutería" className="h-[300px] w-full object-cover sm:h-[410px] lg:h-[500px]" />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#3b090a]/45 via-[#6d1013]/20 to-transparent" />
+          <img src="/banner-main.jpg" alt="Banner charcutería" className="h-[300px] w-full object-cover sm:h-[410px] lg:h-[500px]" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#000000]/45 via-[#000000]/20 to-transparent" />
           <div className="absolute inset-0 flex items-end sm:items-center">
             <div className="w-full px-4 pb-6 sm:px-10 sm:pb-0">
               <div className="max-w-xl">
-                <p className="mb-2 inline-block rounded-full border border-white/40 bg-[#a41517]/80 px-3 py-1 text-xs tracking-[0.18em] text-white">
+                <p className="mb-2 inline-block rounded-full border border-white/40 bg-[#FC4A2C] px-3 py-1 text-xs tracking-[0.18em] text-white">
                   SELECCIÓN PREMIUM
                 </p>
                 <h1 className="text-3xl font-bold leading-tight text-white drop-shadow-[0_2px_10px_rgba(0,0,0,0.45)] sm:text-5xl">
@@ -157,10 +155,10 @@ export default function App() {
         </div>
       </header>
 
-      <section className="mx-auto max-w-7xl px-4 pb-16 pt-10 sm:px-6 lg:px-8">
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <section id="catalogo" className="mt-12">
           <div className="mb-5">
-            <h2 className="text-2xl font-bold text-[#8f1315] sm:text-3xl">Productos</h2>
+            <h2 className="text-2xl font-bold text-[#FC4A2C] sm:text-3xl">Productos</h2>
           </div>
           <div className="mb-4 flex flex-wrap items-center gap-2">
             {categories.map((c) => (
@@ -193,7 +191,7 @@ export default function App() {
 
         <section className="mt-14">
           <div className="mb-5">
-            <h2 className="text-2xl font-bold text-[#8f1315] sm:text-3xl">Cursos Maestros</h2>
+            <h2 className="text-2xl font-bold text-[#FC4A2C] sm:text-3xl">Cursos Maestros</h2>
           </div>
 
           <div className="grid gap-4 md:grid-cols-3">
@@ -222,7 +220,9 @@ export default function App() {
       <footer className="mt-10 border-t border-zinc-800 bg-zinc-950 text-zinc-200">
         <div className="mx-auto grid max-w-7xl gap-10 px-4 py-12 sm:px-6 lg:grid-cols-4 lg:px-8">
           <div>
-            <h3 className="text-lg font-semibold text-white">Charcutería Pérez</h3>
+            <div className="mx-auto flex max-w-7xl flex-col items-center justify-center">
+              <BrandLogoMain width={160} height={160} colorFill="#FFFFFF" />
+            </div>
             <p className="mt-3 text-sm text-zinc-400">
               Charcutería artesanal premium y formación especializada para maestros del sabor.
             </p>
@@ -252,6 +252,18 @@ export default function App() {
               <li>WhatsApp: +57 300 352 6578</li>
               <li>Email: cperez@goingtube.com</li>
               <li>Manizales, Caldas, Colombia</li>
+              <li>
+                Instagram:{' '}
+                <a className="hover:text-white" href="https://instagram.com/charcuteriaperez" target="_blank" rel="noreferrer">
+                  @charcuteriaperez
+                </a>
+              </li>
+              <li>
+                TikTok:{' '}
+                <a className="hover:text-white" href="https://tiktok.com/@charcuteriaperez" target="_blank" rel="noreferrer">
+                  @charcuteriaperez
+                </a>
+              </li>
             </ul>
           </div>
         </div>
