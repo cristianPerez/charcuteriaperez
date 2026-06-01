@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
-import { Ham, Search, ShoppingCart, Sparkles, Star, UtensilsCrossed } from 'lucide-react'
+import { Ham, MessageCircle, Search, ShoppingCart, Sparkles, Star, UtensilsCrossed } from 'lucide-react'
 import { products, categories } from '@/data/products'
 import ProductCard from '@/components/ProductCard'
 import CartDrawer from '@/components/CartDrawer'
@@ -180,12 +180,10 @@ export default function App() {
 
           <div className="grid gap-4 md:grid-cols-3">
             {courses.map((course) => {
-              const Icon = course.icon
               return (
                 <article key={course.title} className="overflow-hidden rounded-sm border border-zinc-200 bg-gradient-to-br from-white to-[#fff8f8]">
                   <img src={course.image} alt={course.title} className="h-52 w-full object-cover" />
                   <div className="p-6">
-                    <Icon className="mb-4 text-[#a41517]" size={30} />
                     <h3 className="text-2xl font-semibold text-zinc-900">{course.title}</h3>
                     <p className="mt-2 text-zinc-600">{course.subtitle}</p>
                     <div className="mt-4 inline-flex items-center gap-2 rounded-full border border-amber-200 bg-amber-50 px-3 py-1 text-sm font-semibold text-amber-700">
@@ -243,6 +241,15 @@ export default function App() {
           © {new Date().getFullYear()} Charcutería Pérez. Todos los derechos reservados.
         </div>
       </footer>
+
+      <a
+        href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent('¡Hola! Quiero más información sobre sus productos y cursos.')}`}
+        target="_blank"
+        rel="noreferrer"
+        className="fixed bottom-5 right-5 z-50 inline-flex items-center gap-2 rounded-full bg-[#25D366] px-4 py-3 text-sm font-semibold text-white shadow-lg transition hover:brightness-95"
+      >
+        <MessageCircle size={18} /> WhatsApp
+      </a>
 
       <CartDrawer
         isOpen={cartOpen}
