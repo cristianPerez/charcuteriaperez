@@ -29,7 +29,7 @@ export default function CartDrawer({ isOpen, onOpenChange, items, subtotal, onIn
         </div>
         <div className="mt-5 border-t pt-4">
           <div className="mb-3 flex justify-between"><span>Subtotal</span><span className="font-bold">{formatCop(subtotal)}</span></div>
-          <Button className="w-full" onClick={onCheckout} disabled={items.length===0}>Confirmar Pedido</Button>
+          <Button variant="default" className="w-full bg-[#FC4A2C] hover:bg-[#FC4A2C]/90" onClick={onCheckout} disabled={items.length===0}>Confirmar Pedido</Button>
         </div>
       </SheetContent>
     </Sheet>

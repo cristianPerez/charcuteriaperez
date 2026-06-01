@@ -17,6 +17,8 @@ export default function App() {
   const [search, setSearch] = useState('')
   const [cartOpen, setCartOpen] = useState(false)
   const [cart, setCart] = useState([])
+  const [now, setNow] = useState(Date.now())
+  const [openedCountdowns, setOpenedCountdowns] = useState({})
 
   useEffect(() => {
     const onButtonClick = (event) => {
@@ -41,6 +43,7 @@ export default function App() {
       icon: UtensilsCrossed,
       rating: 4.8,
       image: '/course-chorizos.jpg',
+      releaseDate: '2026-06-30T00:00:00-05:00',
     },
     {
       title: 'Master en Jamones Cocidos Premium',
@@ -48,15 +51,22 @@ export default function App() {
       icon: Ham,
       rating: 4.6,
       image: '/course-cocidos.jpg',
+      releaseDate: '2026-06-30T00:00:00-05:00',
     },
     {
-      title: 'Master en Jamones Curados',
+      title: 'Master en Jamones Curados de España e Italia',
       subtitle: 'Salado, reposo y maduración para piezas excepcionales.',
       icon: Sparkles,
       rating: 5,
       image: '/course-curados.jpg',
+      releaseDate: '2026-07-21T00:00:00-05:00',
     },
   ]
+
+  useEffect(() => {
+    const timer = setInterval(() => setNow(Date.now()), 1000)
+    return () => clearInterval(timer)
+  }, [])
 
   const filteredProducts = useMemo(
     () =>
@@ -107,6 +117,18 @@ export default function App() {
   const courseWhatsApp = (courseName) => {
     const msg = `¡Hola! Quiero más información sobre el curso "${courseName}" de Charcutería Pérez.`
     window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank', 'noopener,noreferrer')
+  }
+
+  const formatCountdown = (targetDate) => {
+    const distance = new Date(targetDate).getTime() - now
+    if (distance <= 0) return 'Disponible ahora'
+
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24))
+    const hours = Math.floor((distance / (1000 * 60 * 60)) % 24)
+    const minutes = Math.floor((distance / (1000 * 60)) % 60)
+    const seconds = Math.floor((distance / 1000) % 60)
+
+    return `${days}d ${hours}h ${minutes}m ${seconds}s`
   }
 
   return (
@@ -206,9 +228,30 @@ export default function App() {
                       <Star size={15} className="fill-amber-500 text-amber-500" />
                       {course.rating.toFixed(1)} / 5.0
                     </div>
-                    <Button className="mt-5" onClick={() => courseWhatsApp(course.title)}>
-                      Pedir información por WhatsApp
-                    </Button>
+                    <div className="flex gap-2">
+                      <Button variant="outline" className="mt-3 w-full" onClick={() => courseWhatsApp(course.title)}>
+                        Pedir información
+                      </Button>
+                      <Button
+                        variant="default"
+                        className="mt-3 w-full bg-[#FC4A2C] hover:bg-[#FC4A2C]/90"
+                        onClick={() =>
+                          setOpenedCountdowns((prev) => ({
+                            ...prev,
+                            [course.title]: true,
+                          }))
+                        }
+                      >
+                        Comprar curso
+                      </Button>
+                    </div>
+
+                    {openedCountdowns[course.title] && (
+                      <div className="mt-3 rounded-sm border border-red-200 bg-red-50 p-3 text-sm text-red-800">
+                        Disponible el {course.title.includes('Curados') ? '21 de julio' : '30 de junio'}:{' '}
+                        <span className="font-semibold">{formatCountdown(course.releaseDate)}</span>
+                      </div>
+                    )}
                   </div>
                 </article>
               )
