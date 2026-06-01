@@ -5,6 +5,13 @@ import { Button } from '@/components/ui/button'
 export default function ProductCard({ product, onAdd }) {
   return (
     <Card className="rounded-2xl">
+      {product.image && (
+        <img
+          src={product.image}
+          alt={product.name}
+          className="h-44 w-full rounded-t-2xl object-cover"
+        />
+      )}
       <CardContent className="p-5">
         <div className="mb-3 flex items-center justify-between">
           <span className="rounded-full bg-muted px-3 py-1 text-xs font-semibold">{product.category}</span>

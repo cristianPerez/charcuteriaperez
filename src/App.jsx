@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
-import { Search, ShieldCheck, ShoppingCart, Truck, UtensilsCrossed } from 'lucide-react'
+import { Ham, Search, ShoppingCart, Sparkles, Star, UtensilsCrossed } from 'lucide-react'
 import { products, categories } from '@/data/products'
 import ProductCard from '@/components/ProductCard'
 import CartDrawer from '@/components/CartDrawer'
@@ -15,6 +15,29 @@ export default function App() {
   const [search, setSearch] = useState('')
   const [cartOpen, setCartOpen] = useState(false)
   const [cart, setCart] = useState([])
+  const courses = [
+    {
+      title: 'Master en Chorizos del Mundo',
+      subtitle: 'Más de 100 tipos de chorizos diferentes con técnicas artesanales y profesionales.',
+      icon: UtensilsCrossed,
+      rating: 4.8,
+      image: '/course-chorizos.png',
+    },
+    {
+      title: 'Master en Jamones Cocidos Premium',
+      subtitle: 'Curvas de cocción, textura y perfil de sabor de alto nivel.',
+      icon: Ham,
+      rating: 4.6,
+      image: '/course-cocidos.png',
+    },
+    {
+      title: 'Master en Jamones Curados',
+      subtitle: 'Salado, reposo y maduración para piezas excepcionales.',
+      icon: Sparkles,
+      rating: 5,
+      image: '/course-curados.png',
+    },
+  ]
 
   const filteredProducts = useMemo(
     () =>
@@ -59,6 +82,11 @@ export default function App() {
       `Total: ${formatCop(subtotal)}`,
     ].join('\n')
 
+    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank', 'noopener,noreferrer')
+  }
+
+  const courseWhatsApp = (courseName) => {
+    const msg = `¡Hola! Quiero más información sobre el curso "${courseName}" de Charcutería Pérez.`
     window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank', 'noopener,noreferrer')
   }
 
@@ -112,13 +140,10 @@ export default function App() {
       </header>
 
       <section className="mx-auto max-w-7xl px-4 pb-16 pt-10 sm:px-6 lg:px-8">
-        <section className="grid gap-4 sm:grid-cols-3">
-          <div className="rounded-2xl border bg-white p-5"><ShieldCheck className="mb-2" /><h3 className="font-semibold">Calidad controlada</h3><p className="text-sm text-muted-foreground">Materia prima seleccionada y procesos de curado precisos.</p></div>
-          <div className="rounded-2xl border bg-white p-5"><UtensilsCrossed className="mb-2" /><h3 className="font-semibold">Sabor auténtico</h3><p className="text-sm text-muted-foreground">Recetas artesanales con perfil gourmet y carácter propio.</p></div>
-          <div className="rounded-2xl border bg-white p-5"><Truck className="mb-2" /><h3 className="font-semibold">Entrega confiable</h3><p className="text-sm text-muted-foreground">Despacho rápido para mantener frescura y calidad de mesa.</p></div>
-        </section>
-
         <section id="catalogo" className="mt-12">
+          <div className="mb-5">
+            <h2 className="text-2xl font-bold text-[#8f1315] sm:text-3xl">Productos</h2>
+          </div>
           <div className="mb-4 flex flex-wrap items-center gap-2">
             {categories.map((c) => (
               <Button key={c} variant={c === activeCategory ? 'default' : 'outline'} onClick={() => setActiveCategory(c)}>
@@ -147,7 +172,77 @@ export default function App() {
             </AnimatePresence>
           </motion.div>
         </section>
+
+        <section className="mt-14">
+          <div className="mb-5">
+            <h2 className="text-2xl font-bold text-[#8f1315] sm:text-3xl">Cursos Maestros</h2>
+          </div>
+
+          <div className="grid gap-4 md:grid-cols-3">
+            {courses.map((course) => {
+              const Icon = course.icon
+              return (
+                <article key={course.title} className="overflow-hidden rounded-sm border border-zinc-200 bg-gradient-to-br from-white to-[#fff8f8]">
+                  <img src={course.image} alt={course.title} className="h-52 w-full object-cover" />
+                  <div className="p-6">
+                    <Icon className="mb-4 text-[#a41517]" size={30} />
+                    <h3 className="text-2xl font-semibold text-zinc-900">{course.title}</h3>
+                    <p className="mt-2 text-zinc-600">{course.subtitle}</p>
+                    <div className="mt-4 inline-flex items-center gap-2 rounded-full border border-amber-200 bg-amber-50 px-3 py-1 text-sm font-semibold text-amber-700">
+                      <Star size={15} className="fill-amber-500 text-amber-500" />
+                      {course.rating.toFixed(1)} / 5.0
+                    </div>
+                    <Button className="mt-5" onClick={() => courseWhatsApp(course.title)}>
+                      Pedir información por WhatsApp
+                    </Button>
+                  </div>
+                </article>
+              )
+            })}
+          </div>
+        </section>
       </section>
+
+      <footer className="mt-10 border-t border-zinc-800 bg-zinc-950 text-zinc-200">
+        <div className="mx-auto grid max-w-7xl gap-10 px-4 py-12 sm:px-6 lg:grid-cols-4 lg:px-8">
+          <div>
+            <h3 className="text-lg font-semibold text-white">Charcutería Pérez</h3>
+            <p className="mt-3 text-sm text-zinc-400">
+              Charcutería artesanal premium y formación especializada para maestros del sabor.
+            </p>
+          </div>
+
+          <div>
+            <h4 className="text-sm font-semibold uppercase tracking-wider text-zinc-300">Navegación</h4>
+            <ul className="mt-3 space-y-2 text-sm text-zinc-400">
+              <li><a href="#catalogo" className="hover:text-white">Productos</a></li>
+              <li><a href="#" className="hover:text-white">Cursos</a></li>
+              <li><a href="#" className="hover:text-white">Contacto</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="text-sm font-semibold uppercase tracking-wider text-zinc-300">Horario</h4>
+            <ul className="mt-3 space-y-2 text-sm text-zinc-400">
+              <li>Lunes a Viernes: 9:00 - 19:00</li>
+              <li>Sábado: 9:00 - 15:00</li>
+              <li>Domingo: Cerrado</li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="text-sm font-semibold uppercase tracking-wider text-zinc-300">Contacto</h4>
+            <ul className="mt-3 space-y-2 text-sm text-zinc-400">
+              <li>WhatsApp: +57 300 352 6578</li>
+              <li>Email: cperez@goingtube.com</li>
+              <li>Manizales, Caldas, Colombia</li>
+            </ul>
+          </div>
+        </div>
+        <div className="border-t border-zinc-800 py-4 text-center text-xs text-zinc-500">
+          © {new Date().getFullYear()} Charcutería Pérez. Todos los derechos reservados.
+        </div>
+      </footer>
 
       <CartDrawer
         isOpen={cartOpen}
