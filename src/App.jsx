@@ -23,6 +23,7 @@ export default function App() {
       if (!button) return
 
       mixpanel.track('button_clicked', {
+        button_name: button.innerText?.trim().toLowerCase().replace(/\s+/g, '_') || 'unknown',
         label: button.innerText?.trim() || 'unknown',
         id: button.id || undefined,
         className: button.className || undefined,
