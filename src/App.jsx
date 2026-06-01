@@ -7,7 +7,6 @@ import ProductCard from '@/components/ProductCard'
 import CartDrawer from '@/components/CartDrawer'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import BrandLogoMain from './components/BrandLogoMain'
 
 const WHATSAPP_NUMBER = '573003526578'
 const formatCop = (v) => `$${v.toLocaleString('es-CO')}`
@@ -195,7 +194,7 @@ export default function App() {
 
         <div className="w-full border-b border-zinc-200 bg-white">
           <div className="mx-auto flex max-w-7xl flex-col items-center justify-center">
-            <BrandLogoMain width={200} height={200} colorFill="#FC4A2C" />
+            <img src="/logo-main.svg" alt="Charcutería Pérez" className="h-[10rem] w-[10rem] object-contain" />
           </div>
         </div>
 
@@ -324,7 +323,7 @@ export default function App() {
         <div className="mx-auto grid max-w-7xl gap-10 px-4 py-12 sm:px-6 lg:grid-cols-4 lg:px-8">
           <div>
             <div className="mx-auto flex max-w-7xl flex-col items-center justify-center">
-              <BrandLogoMain width={160} height={160} colorFill="#FFFFFF" />
+              <img src="/logo-main.svg" alt="Charcutería Pérez" className="h-40 w-40 object-contain brightness-0 invert" />
             </div>
             <p className="mt-3 text-sm text-zinc-400">
               Charcutería artesanal premium y formación especializada para maestros del sabor.
